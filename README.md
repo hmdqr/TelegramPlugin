@@ -1,3 +1,5 @@
+Note: This project was fully coded using GitHub Copilot.
+
 ## TelegramPlugin
 
 [![Build](https://github.com/hmdqr/TelegramPlugin/actions/workflows/release.yml/badge.svg)](https://github.com/hmdqr/TelegramPlugin/actions/workflows/release.yml)
