@@ -1,0 +1,6 @@
+name: TelegramPlugin
+main: com.hmdqr.telegramplugin.Main
+version: 1.0.0
+api-version: "1.20"
+author: hmdqr
+description: A customizable Telegram integration plugin for Paper/Spigot

@@ -1,0 +1,77 @@
+########## Build / Maven ##########
+/target/
+/dependency-reduced-pom.xml
+/release.properties
+/pom.xml.versionsBackup
+*.class
+
+# Maven Wrapper (optional to ignore)
+/.mvn/wrapper/maven-wrapper.jar
+/.mvn/wrapper/maven-wrapper.properties
+/mvnw
+/mvnw.cmd
+
+########## IDEs / Editors ##########
+# IntelliJ
+/.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+/.project
+/.classpath
+/.settings/
+
+# VS Code
+/.vscode/
+*.code-workspace
+/.history/
+
+# NetBeans / Others
+/nbproject/private/
+/.nb-gradle/
+
+# Common build/output and caches
+/.gradle/
+/build/
+/out/
+
+########## Logs / Reports ##########
+*.log
+/logs/
+hs_err_pid*
+replay_pid*
+
+########## OS junk ##########
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+.Spotlight-V100
+.Trashes
+
+########## Coverage / Reports ##########
+/coverage/
+/target/site/jacoco/
+/jacoco.exec
+*.exec
+*.ec
+
+########## Local server/run dirs (if present) ##########
+/server/
+/run/
+
+########## Env / Secrets ##########
+.env
+.env.*
+*.local.yml
+*.secret.yml
+*.secrets.yml
+
+########## Temp / Backup ##########
+*~
+*.swp
+*.swo
+*.tmp
+*.bak
