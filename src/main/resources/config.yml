@@ -5,6 +5,9 @@
 # Fill in your bot token and chat ID, then customize messages below.
 # ===============================================
 
+# Internal version of this config file. Used for smooth upgrades.
+config_version: 2
+
 telegram:
   # Bot token from @BotFather. Example: 123456789:AA...xyz
   token: "YOUR_TELEGRAM_BOT_TOKEN"
@@ -21,6 +24,11 @@ messages:
   # Enable/disable notifications
   enable_join: true
   enable_quit: true
+  enable_kick: false
+  enable_ban: false
+  enable_death: false
+  enable_teleport: false
+  enable_low_tps: false
 
   # Text formatting for Telegram messages.
   # Options: none, Markdown, MarkdownV2, HTML
@@ -36,6 +44,28 @@ messages:
   #   {max}    - server max player count
   join: "[+] {player} joined the server."
   quit: "[-] {player} left the server."
+
+  # Extra placeholders by event:
+  # Kick: {reason}
+  kick: "[ALERT] {player} was kicked: {reason}"
+
+  # Ban (detected on login disallow): {reason}
+  ban: "[ALERT] {player} is banned: {reason}"
+
+  # Death: {cause}, {x}, {y}, {z}
+  death: "\u2620 {player} died to {cause} at {x},{y},{z} in {world}"
+
+  # Teleport: {from_x},{from_y},{from_z},{from_world}, {to_x},{to_y},{to_z},{to_world}
+  teleport: "\u21A6 {player} teleported {from_world}({from_x},{from_y},{from_z}) \u2192 {to_world}({to_x},{to_y},{to_z})"
+
+  # Low TPS alert settings
+  # Check interval in seconds and alert threshold
+  low_tps_check_seconds: 15
+  low_tps_threshold: 16.0
+  # Minimum time (seconds) between low TPS alerts
+  low_tps_cooldown_seconds: 300
+  # Placeholders: {tps1m}, {tps5m}, {tps15m}
+  low_tps: "\u26A0 TPS low: {tps1m} (5m: {tps5m}, 15m: {tps15m})"
 
   # --- Examples ---
   # Example (MarkdownV2): bold player name

@@ -8,6 +8,7 @@ Lightweight Paper plugin that sends Minecraft join/leave notifications to Telegr
 - URL-encoding and sensible timeouts
 - Configuration validated at startup
 - Fully customizable messages with placeholders and parse modes
+- Optional alerts: kick, ban (login disallow), death, teleport, low TPS
 
 ## Requirements
 - Java 17+
@@ -33,10 +34,31 @@ telegram:
 messages:
   enable_join: true
   enable_quit: true
+  enable_kick: false
+  enable_ban: false
+  enable_death: false
+  enable_teleport: false
+  enable_low_tps: false
   parse_mode: none   # none | Markdown | MarkdownV2 | HTML
   # Available placeholders: {player}, {uuid}, {world}, {online}, {max}
   join: "[+] {player} joined the server."
   quit: "[-] {player} left the server."
+  # Extra placeholders:
+  #  Kick: {reason}
+  #  Ban: {reason}
+  #  Death: {cause}, {x}, {y}, {z}
+  #  Teleport: {from_x},{from_y},{from_z},{from_world}, {to_x},{to_y},{to_z},{to_world}
+  kick: "[ALERT] {player} was kicked: {reason}"
+  ban: "[ALERT] {player} is banned: {reason}"
+  death: "\u2620 {player} died to {cause} at {x},{y},{z} in {world}"
+  teleport: "\u21A6 {player} teleported {from_world}({from_x},{from_y},{from_z}) \u2192 {to_world}({to_x},{to_y},{to_z})"
+
+  # Low TPS monitoring
+  low_tps_check_seconds: 15
+  low_tps_threshold: 16.0
+  low_tps_cooldown_seconds: 300
+  # Placeholders: {tps1m}, {tps5m}, {tps15m}
+  low_tps: "\u26A0 TPS low: {tps1m} (5m: {tps5m}, 15m: {tps15m})"
 ```
 
 Examples:

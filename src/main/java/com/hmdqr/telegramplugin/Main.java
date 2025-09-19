@@ -18,13 +18,16 @@ public class Main extends JavaPlugin {
         instance = this;
 
         // Load config
-        saveDefaultConfig();
+    saveDefaultConfig();
+    // Merge new defaults for users upgrading from older versions
+    getConfig().options().copyDefaults(true);
+    saveConfig();
 
         // Read config
         String token = getConfig().getString("telegram.token");
         String chatId = getConfig().getString("telegram.chat_id");
 
-        // Basic validation
+    // Basic validation
         if (token == null || token.isBlank() || token.contains("YOUR_TELEGRAM_BOT_TOKEN") ||
                 chatId == null || chatId.isBlank() || chatId.contains("YOUR_CHAT_ID")) {
             getLogger().severe("Invalid Telegram configuration. Please set telegram.token and telegram.chat_id in config.yml");
@@ -44,6 +47,12 @@ public class Main extends JavaPlugin {
 
     // Register Events
     getServer().getPluginManager().registerEvents(new PlayerJoinLeaveListener(telegramManager, this), this);
+    getServer().getPluginManager().registerEvents(new com.hmdqr.telegramplugin.events.AlertsListener(telegramManager, this), this);
+
+        // Optional low TPS monitor
+        if (getConfig().getBoolean("messages.enable_low_tps", false)) {
+            new com.hmdqr.telegramplugin.tasks.TPSMonitor(this, telegramManager).start();
+        }
 
         getLogger().info("Telegram Plugin enabled.");
     }

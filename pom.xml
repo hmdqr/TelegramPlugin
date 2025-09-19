@@ -25,7 +25,6 @@
     </repositories>
 
     <dependencies>
-        <!-- Use the Paper API, provided by the server at runtime -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
@@ -44,7 +43,6 @@
                     <release>17</release>
                 </configuration>
             </plugin>
-            <!-- Shade plugin is optional; keep here for future libs (Paper API stays provided) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
