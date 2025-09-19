@@ -113,16 +113,7 @@ Artifacts appear in `target/`.
 Notes
 - CI builds use Temurin JDK 21, but the plugin targets Java 17 bytecode (maven-compiler release=17). Running on Java 17+ is supported.
 
-## Helper scripts
-Windows:
-- `scripts\\bump_version.bat 1.1.0` — update project version
-- `scripts\\build.bat` — build the plugin
-- `scripts\\tag_and_push.bat` — tag v<version> and push (then create a GitHub Release)
-- `scripts\\release.bat` — build, tag, and (optionally) create a GitHub release via `gh`
-
-Each Windows `.bat` pauses on completion or error so you can read the output when double‑clicking.
-
-Linux/macOS:
+## Helper scripts (Linux/macOS)
 - `bash scripts/bump_version.sh 1.1.0`
 - `bash scripts/build.sh`
 - `bash scripts/tag_and_push.sh`
