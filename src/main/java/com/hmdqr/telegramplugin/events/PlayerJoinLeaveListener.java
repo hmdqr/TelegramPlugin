@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.entity.Player;
 
 public class PlayerJoinLeaveListener implements Listener {
 
@@ -21,30 +22,32 @@ public class PlayerJoinLeaveListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-    Main main = Main.getInstance();
-    if (!main.isEnableJoin()) return;
-    String msg = applyTemplate(main.getJoinTemplate(), event.getPlayer().getName());
-    // Run async to avoid blocking the main thread
-    String parse = main.getParseMode();
-    Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> telegramManager.sendMessage(msg, parse));
+        Main main = Main.getInstance();
+        if (!main.isEnableJoin()) return;
+        String msg = applyTemplate(main.getJoinTemplate(), event.getPlayer());
+        // Run async to avoid blocking the main thread
+        String parse = main.getParseMode();
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> telegramManager.sendMessage(msg, parse));
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Main main = Main.getInstance();
         if (!main.isEnableQuit()) return;
-        String msg = applyTemplate(main.getQuitTemplate(), event.getPlayer().getName());
+        String msg = applyTemplate(main.getQuitTemplate(), event.getPlayer());
         String parse = main.getParseMode();
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> telegramManager.sendMessage(msg, parse));
     }
 
-    private String applyTemplate(String template, String playerName) {
+    private String applyTemplate(String template, Player player) {
         int online = Bukkit.getOnlinePlayers().size();
         int max = Bukkit.getMaxPlayers();
+        String uuid = player.getUniqueId().toString();
+        String world = player.getWorld() != null ? player.getWorld().getName() : "";
         return template
-                .replace("{player}", playerName)
-                .replace("{uuid}", Bukkit.getPlayer(playerName) != null ? Bukkit.getPlayer(playerName).getUniqueId().toString() : "")
-                .replace("{world}", Bukkit.getPlayer(playerName) != null ? Bukkit.getPlayer(playerName).getWorld().getName() : "")
+                .replace("{player}", player.getName())
+                .replace("{uuid}", uuid)
+                .replace("{world}", world)
                 .replace("{online}", String.valueOf(online))
                 .replace("{max}", String.valueOf(max));
     }

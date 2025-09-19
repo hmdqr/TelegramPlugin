@@ -1,6 +1,6 @@
 ## TelegramPlugin
 
-Lightweight Paper plugin that sends Minecraft join/leave notifications to Telegram.
+Lightweight Paper plugin that sends Minecraft server notifications to Telegram (join/leave, optional alerts, and low TPS monitor).
 
 ### Features
 - Sends join/leave messages to a Telegram chat
@@ -8,7 +8,9 @@ Lightweight Paper plugin that sends Minecraft join/leave notifications to Telegr
 - URL-encoding and sensible timeouts
 - Configuration validated at startup
 - Fully customizable messages with placeholders and parse modes
-- Optional alerts: kick, ban (login disallow), death, teleport, low TPS
+- Optional alerts: kick, ban (login disallow), death, teleport, low TPS (cooldown + threshold)
+
+No commands or permissions are added by this plugin.
 
 ## Requirements
 - Java 17+
@@ -88,6 +90,11 @@ Examples:
    - Visit `https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates` and read `message.chat.id` in the JSON
    - Group/supergroup IDs are often negative (e.g., `-1001234567890`)
 
+## Config upgrades
+- The plugin writes default `config.yml` on first run and merges new defaults on upgrade (copyDefaults = true).
+- A hidden `config_version` may be used to track defaults; new keys are added while your existing values are preserved.
+- If we ever remove/rename keys, you may need to adjust your config manually.
+
 ## Build from source
 Run in the project root (where `pom.xml` resides).
 
@@ -103,12 +110,17 @@ mvn -q -DskipTests package
 
 Artifacts appear in `target/`.
 
+Notes
+- CI builds use Temurin JDK 21, but the plugin targets Java 17 bytecode (maven-compiler release=17). Running on Java 17+ is supported.
+
 ## Helper scripts
 Windows:
 - `scripts\\bump_version.bat 1.1.0` — update project version
 - `scripts\\build.bat` — build the plugin
 - `scripts\\tag_and_push.bat` — tag v<version> and push (then create a GitHub Release)
 - `scripts\\release.bat` — build, tag, and (optionally) create a GitHub release via `gh`
+
+Each Windows `.bat` pauses on completion or error so you can read the output when double‑clicking.
 
 Linux/macOS:
 - `bash scripts/bump_version.sh 1.1.0`
@@ -123,6 +135,11 @@ Linux/macOS:
   - Ensure the bot is present and allowed to post in the chat/group
   - Use the correct (possibly negative) group chat ID
   - Confirm outbound connectivity to `api.telegram.org`
+  - If using MarkdownV2/HTML, ensure your message text escapes special characters per Telegram rules
+
+Common Telegram API errors
+- 400 Bad Request: often due to unescaped characters with `parse_mode` set
+- 403 Forbidden: bot not a participant in the target chat, or blocked
 
 ## Compatibility
 - Default: Paper 1.20.6, Java 17+
