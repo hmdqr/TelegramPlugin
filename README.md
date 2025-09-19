@@ -4,7 +4,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 ![Java](https://img.shields.io/badge/Java-17%2B-blue)
 ![Paper](https://img.shields.io/badge/Paper-1.20.6%2B-orange)
-[![Ko-fi](https://img.shields.io/badge/Ko--fi-donate-ff5e5b?logo=kofi&logoColor=white)](https://ko-fi.com/hmdqr)
 [![PayPal](https://img.shields.io/badge/PayPal-donate-00457C?logo=paypal&logoColor=white)](https://paypal.me/hmdqr/)
 
 Lightweight, friendly Paper plugin that sends Minecraft server notifications to Telegram — join/leave, optional alerts, and a low TPS monitor. Clear setup, sane defaults, and no fuss.
@@ -154,8 +153,7 @@ PRs and issues are welcome — whether it’s a typo fix, a feature request, or 
 
 ## Support this project
 If this plugin saved you time or made your server friendlier, consider supporting development:
-- Ko-fi: https://ko-fi.com/hmdqr
-- PayPal.me: https://paypal.me/hmdqr/
+- PayPal: https://paypal.me/hmdqr/
 
 Even small tips help keep the work going — thank you!
 
