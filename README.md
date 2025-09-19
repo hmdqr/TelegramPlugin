@@ -32,6 +32,7 @@ Quick links: [Releases](https://github.com/hmdqr/TelegramPlugin/releases) · [Ac
 
 </details>
 
+<a id="quick-start"></a>
 ## Quick start
 1) Download the latest shaded JAR from Releases (Assets → file ending with -shaded.jar).
 2) Copy it to your server's `plugins/` folder.
@@ -39,6 +40,7 @@ Quick links: [Releases](https://github.com/hmdqr/TelegramPlugin/releases) · [Ac
 4) Edit `config.yml` and set `telegram.token` and `telegram.chat_id`.
 5) Restart the server.
 
+<a id="features"></a>
 ## Features
 - Sends join/leave messages to a Telegram chat
 - Optional alerts: kick, ban (login disallow), death, teleport, low TPS (cooldown + threshold)
@@ -48,6 +50,7 @@ Quick links: [Releases](https://github.com/hmdqr/TelegramPlugin/releases) · [Ac
 
 No commands or permissions are added by this plugin.
 
+<a id="requirements"></a>
 ## Requirements
 - Java 17+
 - Maven 3.8+
@@ -59,6 +62,7 @@ Using a different Paper version? Update both:
 
 PaperMC docs: https://docs.papermc.io/
 
+<a id="installation"></a>
 ## Installation
 - Stable: get the latest release from GitHub Releases → https://github.com/hmdqr/TelegramPlugin/releases (Assets → shaded JAR)
 - Nightly: every push to main builds a JAR; download from GitHub Actions → https://github.com/hmdqr/TelegramPlugin/actions (Artifacts)
@@ -69,6 +73,7 @@ Then:
 3) Set `telegram.token` and `telegram.chat_id`.
 4) Restart.
 
+<a id="configuration"></a>
 ## Configuration
 The configuration file is written to `plugins/TelegramPlugin/config.yml` on first run.
 
@@ -154,6 +159,7 @@ Examples:
     quit: "[-] <i>{player}</i> left"
   ```
 
+<a id="telegram-setup"></a>
 ## Telegram setup
 1. Create a bot via Telegram’s @BotFather and obtain the HTTP API token.
 2. Send a message to the bot (or add the bot to a group).
@@ -166,11 +172,13 @@ Useful docs
 - MarkdownV2 rules: https://core.telegram.org/bots/api#markdownv2-style
 - HTML style: https://core.telegram.org/bots/api#html-style
 
+<a id="config-upgrades"></a>
 ## Config upgrades
 - The plugin writes default `config.yml` on first run and merges new defaults on upgrade (copyDefaults = true).
 - A hidden `config_version` may be used to track defaults; new keys are added while your existing values are preserved.
 - If we ever remove/rename keys, you may need to adjust your config manually.
 
+<a id="build-from-source"></a>
 ## Build from source
 Run in the project root (where `pom.xml` resides).
 
@@ -189,6 +197,7 @@ Artifacts appear in `target/`.
 Notes
 - CI builds use Temurin JDK 21, but the plugin targets Java 17 bytecode (maven-compiler release=17). Running on Java 17+ is supported.
 
+<a id="helper-scripts"></a>
 ## Helper scripts
 Linux/macOS
 - `bash scripts/bump_version.sh 1.1.0`
@@ -201,12 +210,14 @@ Windows
 - `scripts\build.bat`
 - `scripts\tag_and_push.bat`
 - `scripts\release.bat`
+<a id="known-limitations"></a>
 ## Known limitations
 - Single target chat_id (per plugin instance)
 - No proxy configuration
 - Only text messages are sent (no photos/files)
 - Telegram rate limits apply; the plugin does not queue during downtime
 
+<a id="security"></a>
 ## Security
 - Treat your bot token as a secret; do not commit `config.yml` with a real token
 - Limit who can access your server files and console
@@ -214,6 +225,7 @@ Windows
 
 Tip: If you prefer not to install Maven globally, add the Maven Wrapper (`mvnw`, `mvnw.cmd`) — happy to include it.
 
+<a id="troubleshooting"></a>
 ## Troubleshooting
 - Plugin disables on startup: placeholders in `config.yml` not replaced, or token/chat ID missing
 - No messages received:
@@ -227,10 +239,12 @@ Common Telegram API errors
 - 400 Bad Request: often due to unescaped characters with `parse_mode` set
 - 403 Forbidden: bot not a participant in the target chat, or blocked
 
+<a id="compatibility"></a>
 ## Compatibility
 - Default: Paper 1.20.6, Java 17+
 - For other versions, align `api-version` and Paper API dependency
 
+<a id="contributing"></a>
 ## Contributing
 PRs and issues are welcome — whether it’s a typo fix, a feature request, or a bug report.
 
@@ -239,11 +253,13 @@ When filing bugs, include:
 - Plugin version
 - Reproduction steps and relevant console logs
 
+<a id="support-this-project"></a>
 ## Support this project
 If this plugin saved you time or made your server friendlier, consider supporting development:
 - PayPal: https://paypal.me/hmdqr/
 
 Even small tips help keep the work going — thank you!
 
+<a id="license"></a>
 ## License
 MIT License — see `LICENSE` for details.
