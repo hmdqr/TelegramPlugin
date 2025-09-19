@@ -25,6 +25,10 @@ Using another Paper version? Update both:
 3. Edit `config.yml` and set the bot token and chat ID.
 4. Restart the server.
 
+Download
+- Stable: get the latest release from GitHub Releases (Assets → the JAR file).
+- Nightly: every push to main builds a JAR; download it from the Actions run (Artifacts).
+
 Configuration (`plugins/TelegramPlugin/config.yml`):
 ```yaml
 telegram:
@@ -98,6 +102,19 @@ mvn -q -DskipTests package
 ```
 
 Artifacts appear in `target/`.
+
+## Helper scripts
+Windows:
+- `scripts\\bump_version.bat 1.1.0` — update project version
+- `scripts\\build.bat` — build the plugin
+- `scripts\\tag_and_push.bat` — tag v<version> and push (then create a GitHub Release)
+- `scripts\\release.bat` — build, tag, and (optionally) create a GitHub release via `gh`
+
+Linux/macOS:
+- `bash scripts/bump_version.sh 1.1.0`
+- `bash scripts/build.sh`
+- `bash scripts/tag_and_push.sh`
+- `bash scripts/release.sh`
 
 ## Troubleshooting
 - Plugin disables on startup: placeholders in `config.yml` not replaced, or token/chat ID missing
