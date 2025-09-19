@@ -1,6 +1,4 @@
-Note: This project was fully coded using GitHub Copilot.
-
-## TelegramPlugin
+# TelegramPlugin
 
 [![Build](https://github.com/hmdqr/TelegramPlugin/actions/workflows/release.yml/badge.svg)](https://github.com/hmdqr/TelegramPlugin/actions/workflows/release.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -8,17 +6,41 @@ Note: This project was fully coded using GitHub Copilot.
 ![Paper](https://img.shields.io/badge/Paper-1.20.6%2B-orange)
 [![PayPal](https://img.shields.io/badge/PayPal-donate-00457C?logo=paypal&logoColor=white)](https://paypal.me/hmdqr/)
 
+_Note: This project was fully coded using GitHub Copilot._
+
 Lightweight, friendly Paper plugin that sends Minecraft server notifications to Telegram — join/leave, optional alerts, and a low TPS monitor. Clear setup, sane defaults, and no fuss.
 
 Quick links: [Releases](https://github.com/hmdqr/TelegramPlugin/releases) · [Actions/Artifacts](https://github.com/hmdqr/TelegramPlugin/actions) · [Issues](https://github.com/hmdqr/TelegramPlugin/issues)
 
-### Features
+## Table of contents
+- Quick start
+- Features
+- Requirements
+- Installation
+- Configuration
+- Telegram setup
+- Build from source
+- Helper scripts
+- Troubleshooting
+- Known limitations
+- Security
+- Compatibility
+- Contributing
+- License
+
+## Quick start
+1) Download the latest shaded JAR from Releases (Assets → file ending with -shaded.jar).
+2) Copy it to your server's `plugins/` folder.
+3) Start the server once to generate `plugins/TelegramPlugin/config.yml`.
+4) Edit `config.yml` and set `telegram.token` and `telegram.chat_id`.
+5) Restart the server.
+
+## Features
 - Sends join/leave messages to a Telegram chat
-- Asynchronous HTTP (non-blocking)
-- URL-encoding and sensible timeouts
-- Configuration validated at startup
-- Fully customizable messages with placeholders and parse modes
 - Optional alerts: kick, ban (login disallow), death, teleport, low TPS (cooldown + threshold)
+- Asynchronous HTTP (non-blocking) with URL-encoding and timeouts
+- Config validated at startup; fails closed on missing token/chat ID
+- Fully customizable messages with placeholders and parse modes (none/Markdown/MarkdownV2/HTML)
 
 No commands or permissions are added by this plugin.
 
@@ -27,23 +49,24 @@ No commands or permissions are added by this plugin.
 - Maven 3.8+
 - Paper 1.20.6 (recommended)
 
-Using another Paper version? Update both:
+Using a different Paper version? Update both:
 - `plugin.yml` → `api-version`
 - `pom.xml` → `io.papermc.paper:paper-api` version
 
 PaperMC docs: https://docs.papermc.io/
 
 ## Installation
-1. Place the plugin JAR into the server `plugins/` directory.
-2. Start the server once to generate `plugins/TelegramPlugin/config.yml`.
-3. Edit `config.yml` and set the bot token and chat ID.
-4. Restart the server.
+- Stable: get the latest release from GitHub Releases → https://github.com/hmdqr/TelegramPlugin/releases (Assets → shaded JAR)
+- Nightly: every push to main builds a JAR; download from GitHub Actions → https://github.com/hmdqr/TelegramPlugin/actions (Artifacts)
 
-Download
-- Stable: get the latest release from GitHub Releases → https://github.com/hmdqr/TelegramPlugin/releases (Assets → the shaded JAR)
-- Nightly: every push to main builds a JAR; grab it from GitHub Actions → https://github.com/hmdqr/TelegramPlugin/actions (Artifacts)
+Then:
+1) Place the JAR into `plugins/`.
+2) Start once to generate `plugins/TelegramPlugin/config.yml`.
+3) Set `telegram.token` and `telegram.chat_id`.
+4) Restart.
 
-Configuration (`plugins/TelegramPlugin/config.yml`):
+## Configuration (plugins/TelegramPlugin/config.yml)
+YAML excerpt:
 ```yaml
 telegram:
   token: "YOUR_TELEGRAM_BOT_TOKEN"
@@ -67,6 +90,28 @@ messages:
   #  Death: {cause}, {x}, {y}, {z}
   #  Teleport: {from_x},{from_y},{from_z},{from_world}, {to_x},{to_y},{to_z},{to_world}
   kick: "[ALERT] {player} was kicked: {reason}"
+
+Quick reference
+- telegram.token (string): required, from @BotFather.
+- telegram.chat_id (string/int): required. Groups often use a negative ID like -1001234567890.
+- messages.enable_join|quit|kick|ban|death|teleport|low_tps (bool): toggles per event.
+- messages.parse_mode: none | Markdown | MarkdownV2 | HTML.
+- messages.join|quit|kick|ban|death|teleport|low_tps: templates with placeholders.
+- messages.low_tps_check_seconds (int): check interval seconds.
+- messages.low_tps_threshold (double): alert when 1m TPS below this.
+- messages.low_tps_cooldown_seconds (int): minimum seconds between alerts.
+- config_version: used internally to merge new defaults on upgrade.
+
+Placeholders
+- Common: {player}, {uuid}, {world}, {online}, {max}
+- Kick: {reason}
+- Ban: {reason}
+- Death: {cause}, {x}, {y}, {z}
+- Teleport: {from_x},{from_y},{from_z},{from_world}, {to_x},{to_y},{to_z},{to_world}
+
+Parse mode gotchas
+- MarkdownV2 and HTML require proper escaping. If a message fails with HTTP 400, first suspect unescaped characters.
+- If in doubt, use `parse_mode: none` for plain text.
   ban: "[ALERT] {player} is banned: {reason}"
   death: "\u2620 {player} died to {cause} at {x},{y},{z} in {world}"
   teleport: "\u21A6 {player} teleported {from_world}({from_x},{from_y},{from_z}) \u2192 {to_world}({to_x},{to_y},{to_z})"
@@ -99,10 +144,15 @@ Examples:
 1. Create a bot via Telegram’s @BotFather and obtain the HTTP API token.
 2. Send a message to the bot (or add the bot to a group).
 3. Retrieve the chat ID:
-  - Visit `https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates` and read `message.chat.id` in the JSON
-   - Group/supergroup IDs are often negative (e.g., `-1001234567890`)
+Linux/macOS:
+```bash
+mvn -q -DskipTests package
+```
 
-Useful docs
+Windows (Command Prompt):
+```bat
+mvn -q -DskipTests package
+```
 - Bot API sendMessage: https://core.telegram.org/bots/api#sendmessage
 - MarkdownV2 rules: https://core.telegram.org/bots/api#markdownv2-style
 - HTML style: https://core.telegram.org/bots/api#html-style
@@ -116,11 +166,17 @@ Useful docs
 Run in the project root (where `pom.xml` resides).
 
 Linux/macOS:
+
+## Helper scripts (Windows)
+- `scripts\bump_version.bat 1.1.0`
+- `scripts\build.bat`
+- `scripts\tag_and_push.bat`
+- `scripts\release.bat`
 ```bash
 mvn -q -DskipTests package
 ```
 
-Artifacts appear in `target/`.
+  - Check server console for messages like: Telegram sendMessage failed: HTTP {status_code}
 
 Notes
 - CI builds use Temurin JDK 21, but the plugin targets Java 17 bytecode (maven-compiler release=17). Running on Java 17+ is supported.
@@ -130,12 +186,27 @@ Notes
 - `bash scripts/build.sh`
 - `bash scripts/tag_and_push.sh`
 - `bash scripts/release.sh`
+## Known limitations
+- Single target chat_id (per plugin instance)
+- No proxy configuration
+- Only text messages are sent (no photos/files)
+- Telegram rate limits apply; the plugin does not queue during downtime
+
+## Security
+- Treat your bot token as a secret; do not commit `config.yml` with a real token
+- Limit who can access your server files and console
+
 
 Tip: If you prefer not to install Maven globally, add the Maven Wrapper (`mvnw`, `mvnw.cmd`) — happy to include it.
 
 ## Troubleshooting
 - Plugin disables on startup: placeholders in `config.yml` not replaced, or token/chat ID missing
-- No messages received:
+PRs and issues are welcome — whether it’s a typo fix, a feature request, or a bug report.
+
+When filing bugs, include:
+- Server version (Paper build), Java version
+- Plugin version
+- Reproduction steps and relevant console logs
   - Check server console for `Telegram sendMessage failed: HTTP <code>`
   - Ensure the bot is present and allowed to post in the chat/group
   - Use the correct (possibly negative) group chat ID
