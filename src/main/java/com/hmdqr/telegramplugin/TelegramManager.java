@@ -23,10 +23,21 @@ public class TelegramManager {
      * Send a text message to Telegram chat (safe to call from async context).
      */
     public void sendMessage(String text) {
+        sendMessage(text, null);
+    }
+
+    /**
+     * Send a text message with optional parse mode (Markdown, MarkdownV2, HTML). Null or "none" disables parse mode.
+     */
+    public void sendMessage(String text, String parseMode) {
         String apiUrl = "https://api.telegram.org/bot" + botToken + "/sendMessage";
         try {
-            String payload = "chat_id=" + urlEncode(chatId) +
-                    "&text=" + urlEncode(text);
+            StringBuilder payload = new StringBuilder();
+            payload.append("chat_id=").append(urlEncode(chatId));
+            payload.append("&text=").append(urlEncode(text));
+            if (parseMode != null && !parseMode.isBlank() && !parseMode.equalsIgnoreCase("none")) {
+                payload.append("&parse_mode=").append(urlEncode(parseMode));
+            }
 
             HttpURLConnection conn = (HttpURLConnection) new URL(apiUrl).openConnection();
             conn.setRequestMethod("POST");
@@ -36,7 +47,7 @@ public class TelegramManager {
             conn.setReadTimeout(5000);
 
             try (OutputStream os = conn.getOutputStream()) {
-                os.write(payload.getBytes(StandardCharsets.UTF_8));
+                os.write(payload.toString().getBytes(StandardCharsets.UTF_8));
             }
 
             int code = conn.getResponseCode();

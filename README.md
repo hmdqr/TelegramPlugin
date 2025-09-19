@@ -7,6 +7,7 @@ Lightweight Paper plugin that sends Minecraft join/leave notifications to Telegr
 - Asynchronous HTTP (non-blocking)
 - URL-encoding and sensible timeouts
 - Configuration validated at startup
+- Fully customizable messages with placeholders and parse modes
 
 ## Requirements
 - Java 17+
@@ -28,7 +29,31 @@ Configuration (`plugins/TelegramPlugin/config.yml`):
 telegram:
   token: "YOUR_TELEGRAM_BOT_TOKEN"
   chat_id: "YOUR_CHAT_ID"
+
+messages:
+  enable_join: true
+  enable_quit: true
+  parse_mode: none   # none | Markdown | MarkdownV2 | HTML
+  # Available placeholders: {player}, {uuid}, {world}, {online}, {max}
+  join: "[+] {player} joined the server."
+  quit: "[-] {player} left the server."
 ```
+
+Examples:
+- MarkdownV2 (remember to escape special characters):
+  ```yaml
+  messages:
+    parse_mode: MarkdownV2
+    join: "[+] *{player}* joined \\({online}\\/{max}\\)"
+    quit: "[-] *{player}* left"
+  ```
+- HTML:
+  ```yaml
+  messages:
+    parse_mode: HTML
+    join: "[+] <i>{player}</i> joined (<code>{online}/{max}</code>)"
+    quit: "[-] <i>{player}</i> left"
+  ```
 
 ## Telegram setup
 1. Create a bot via Telegram’s @BotFather and obtain the HTTP API token.

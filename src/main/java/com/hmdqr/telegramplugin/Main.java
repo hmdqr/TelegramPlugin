@@ -7,6 +7,11 @@ public class Main extends JavaPlugin {
 
     private static Main instance;
     private TelegramManager telegramManager;
+    private boolean enableJoin;
+    private boolean enableQuit;
+    private String parseMode;
+    private String joinTemplate;
+    private String quitTemplate;
 
     @Override
     public void onEnable() {
@@ -27,8 +32,15 @@ public class Main extends JavaPlugin {
             return;
         }
 
-        // Init Telegram Manager
+    // Init Telegram Manager
         telegramManager = new TelegramManager(token, chatId);
+
+    // Message settings
+    enableJoin = getConfig().getBoolean("messages.enable_join", true);
+    enableQuit = getConfig().getBoolean("messages.enable_quit", true);
+    parseMode = getConfig().getString("messages.parse_mode", "none");
+    joinTemplate = getConfig().getString("messages.join", "[+] {player} joined the server.");
+    quitTemplate = getConfig().getString("messages.quit", "[-] {player} left the server.");
 
     // Register Events
     getServer().getPluginManager().registerEvents(new PlayerJoinLeaveListener(telegramManager, this), this);
@@ -48,4 +60,10 @@ public class Main extends JavaPlugin {
     public TelegramManager getTelegramManager() {
         return telegramManager;
     }
+
+    public boolean isEnableJoin() { return enableJoin; }
+    public boolean isEnableQuit() { return enableQuit; }
+    public String getParseMode() { return parseMode; }
+    public String getJoinTemplate() { return joinTemplate; }
+    public String getQuitTemplate() { return quitTemplate; }
 }

@@ -1,3 +1,49 @@
+# ===============================================
+# TelegramPlugin - Configuration
+#
+# This plugin sends join/leave messages to a Telegram chat.
+# Fill in your bot token and chat ID, then customize messages below.
+# ===============================================
+
 telegram:
+  # Bot token from @BotFather. Example: 123456789:AA...xyz
   token: "YOUR_TELEGRAM_BOT_TOKEN"
+
+  # Chat ID where messages should be sent.
+  # - For a private chat: the user's chat ID (use getUpdates or @userinfobot)
+  # - For a group/supergroup: usually a negative number like -1001234567890
+  # To discover it, send a message in the chat, then open:
+  #   https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates
+  # and look for message.chat.id
   chat_id: "YOUR_CHAT_ID"
+
+messages:
+  # Enable/disable notifications
+  enable_join: true
+  enable_quit: true
+
+  # Text formatting for Telegram messages.
+  # Options: none, Markdown, MarkdownV2, HTML
+  # Leave as 'none' for plain text. If you use MarkdownV2/HTML, escape special characters accordingly.
+  parse_mode: none
+
+  # Message templates
+  # Available placeholders:
+  #   {player} - player name
+  #   {uuid}   - player UUID
+  #   {world}  - player's world name
+  #   {online} - number of players currently online (including the joining one)
+  #   {max}    - server max player count
+  join: "[+] {player} joined the server."
+  quit: "[-] {player} left the server."
+
+  # --- Examples ---
+  # Example (MarkdownV2): bold player name
+  # parse_mode: MarkdownV2
+  # join: "[+] *{player}* joined \({online}\/{max}\)"
+  # quit: "[-] *{player}* left"
+
+  # Example (HTML): italics and code
+  # parse_mode: HTML
+  # join: "[+] <i>{player}</i> joined (<code>{online}/{max}</code>)"
+  # quit: "[-] <i>{player}</i> left"
