@@ -12,26 +12,6 @@ Lightweight, friendly Paper plugin that sends Minecraft server notifications to 
 
 Quick links: [Releases](https://github.com/hmdqr/TelegramPlugin/releases) · [Actions/Artifacts](https://github.com/hmdqr/TelegramPlugin/actions) · [Issues](https://github.com/hmdqr/TelegramPlugin/issues)
 
-<details>
-  <summary><strong>Table of contents</strong></summary>
-
-* [Quick start](#quick-start)
-* [Features](#features)
-* [Requirements](#requirements)
-* [Installation](#installation)
-* [Configuration](#configuration)
-* [Telegram setup](#telegram-setup)
-* [Build from source](#build-from-source)
-* [Helper scripts](#helper-scripts)
-* [Troubleshooting](#troubleshooting)
-* [Known limitations](#known-limitations)
-* [Security](#security)
-* [Compatibility](#compatibility)
-* [Contributing](#contributing)
-* [License](#license)
-
-</details>
-
 ## Quick start
 1) Download the latest shaded JAR from Releases (Assets → file ending with -shaded.jar).
 2) Copy it to your server's `plugins/` folder.
