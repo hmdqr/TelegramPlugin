@@ -1,6 +1,15 @@
 ## TelegramPlugin
 
-Lightweight Paper plugin that sends Minecraft server notifications to Telegram (join/leave, optional alerts, and low TPS monitor).
+[![Build](https://github.com/hmdqr/TelegramPlugin/actions/workflows/release.yml/badge.svg)](https://github.com/hmdqr/TelegramPlugin/actions/workflows/release.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+![Java](https://img.shields.io/badge/Java-17%2B-blue)
+![Paper](https://img.shields.io/badge/Paper-1.20.6%2B-orange)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-donate-ff5e5b?logo=kofi&logoColor=white)](https://ko-fi.com/hmdqr)
+[![PayPal](https://img.shields.io/badge/PayPal-donate-00457C?logo=paypal&logoColor=white)](https://paypal.me/hmdqr/)
+
+Lightweight, friendly Paper plugin that sends Minecraft server notifications to Telegram — join/leave, optional alerts, and a low TPS monitor. Clear setup, sane defaults, and no fuss.
+
+Quick links: [Releases](https://github.com/hmdqr/TelegramPlugin/releases) · [Actions/Artifacts](https://github.com/hmdqr/TelegramPlugin/actions) · [Issues](https://github.com/hmdqr/TelegramPlugin/issues)
 
 ### Features
 - Sends join/leave messages to a Telegram chat
@@ -21,6 +30,8 @@ Using another Paper version? Update both:
 - `plugin.yml` → `api-version`
 - `pom.xml` → `io.papermc.paper:paper-api` version
 
+PaperMC docs: https://docs.papermc.io/
+
 ## Installation
 1. Place the plugin JAR into the server `plugins/` directory.
 2. Start the server once to generate `plugins/TelegramPlugin/config.yml`.
@@ -28,8 +39,8 @@ Using another Paper version? Update both:
 4. Restart the server.
 
 Download
-- Stable: get the latest release from GitHub Releases (Assets → the JAR file).
-- Nightly: every push to main builds a JAR; download it from the Actions run (Artifacts).
+- Stable: get the latest release from GitHub Releases → https://github.com/hmdqr/TelegramPlugin/releases (Assets → the shaded JAR)
+- Nightly: every push to main builds a JAR; grab it from GitHub Actions → https://github.com/hmdqr/TelegramPlugin/actions (Artifacts)
 
 Configuration (`plugins/TelegramPlugin/config.yml`):
 ```yaml
@@ -87,8 +98,13 @@ Examples:
 1. Create a bot via Telegram’s @BotFather and obtain the HTTP API token.
 2. Send a message to the bot (or add the bot to a group).
 3. Retrieve the chat ID:
-   - Visit `https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates` and read `message.chat.id` in the JSON
+  - Visit `https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates` and read `message.chat.id` in the JSON
    - Group/supergroup IDs are often negative (e.g., `-1001234567890`)
+
+Useful docs
+- Bot API sendMessage: https://core.telegram.org/bots/api#sendmessage
+- MarkdownV2 rules: https://core.telegram.org/bots/api#markdownv2-style
+- HTML style: https://core.telegram.org/bots/api#html-style
 
 ## Config upgrades
 - The plugin writes default `config.yml` on first run and merges new defaults on upgrade (copyDefaults = true).
@@ -103,11 +119,6 @@ Linux/macOS:
 mvn -q -DskipTests package
 ```
 
-Windows (cmd.exe):
-```bat
-mvn -q -DskipTests package
-```
-
 Artifacts appear in `target/`.
 
 Notes
@@ -118,6 +129,8 @@ Notes
 - `bash scripts/build.sh`
 - `bash scripts/tag_and_push.sh`
 - `bash scripts/release.sh`
+
+Tip: If you prefer not to install Maven globally, add the Maven Wrapper (`mvnw`, `mvnw.cmd`) — happy to include it.
 
 ## Troubleshooting
 - Plugin disables on startup: placeholders in `config.yml` not replaced, or token/chat ID missing
@@ -135,6 +148,16 @@ Common Telegram API errors
 ## Compatibility
 - Default: Paper 1.20.6, Java 17+
 - For other versions, align `api-version` and Paper API dependency
+
+## Contributing
+PRs and issues are welcome — whether it’s a typo fix, a feature request, or a bug report. Please include server version, plugin version, and reproduction steps when filing bugs.
+
+## Support this project
+If this plugin saved you time or made your server friendlier, consider supporting development:
+- Ko-fi: https://ko-fi.com/hmdqr
+- PayPal.me: https://paypal.me/hmdqr/
+
+Even small tips help keep the work going — thank you!
 
 ## License
 MIT License — see `LICENSE` for details.
