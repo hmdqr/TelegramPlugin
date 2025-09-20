@@ -1,5 +1,6 @@
 package com.hmdqr.telegramplugin.commands;
 
+import com.hmdqr.telegramplugin.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 
@@ -24,7 +25,7 @@ public class HmdqrRootCommand implements CommandExecutor, TabCompleter {
             sendUsage(sender, label);
             return true;
         } else if (first.equals("version")) {
-            String ver = (command.getPlugin() != null) ? command.getPlugin().getDescription().getVersion() : "";
+            String ver = Main.getInstance() != null ? Main.getInstance().getDescription().getVersion() : "";
             sender.sendMessage(ChatColor.GREEN + "TelegramPlugin version " + ver);
             return true;
         }
