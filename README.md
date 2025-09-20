@@ -12,6 +12,18 @@ Lightweight, friendly Paper plugin that sends Minecraft server notifications to 
 
 Quick links: [Releases](https://github.com/hmdqr/TelegramPlugin/releases) · [Actions/Artifacts](https://github.com/hmdqr/TelegramPlugin/actions) · [Issues](https://github.com/hmdqr/TelegramPlugin/issues)
 
+## Cheat sheet
+- Install: drop the shaded JAR into `plugins/`, start once, edit `plugins/TelegramPlugin/config.yml`, then `/hmdqr tg reload`.
+- Key commands:
+  - `/hmdqr tg reload` — reloads config/runtime and posts a Telegram confirmation
+  - `/hmdqr tg list` — show feature toggles
+  - `/hmdqr tg enable monitor` — enable low TPS monitor (alias for `enable_low_tps`)
+  - `/hmdqr tg disable enable_quit` — disable quit messages
+  - `/hmdqr tg toggle enable_join on|off` — toggle a feature
+- Permissions: `hmdqr.admin` (ops) → includes all Telegram subcommands
+- Config path: `plugins/TelegramPlugin/config.yml`
+- Required config: `telegram.token`, `telegram.chat_id`
+
 ## Quick start
 1) Download the latest shaded JAR from Releases (Assets → file ending with -shaded.jar).
 2) Copy it to your server's `plugins/` folder.
@@ -130,6 +142,13 @@ Features (feature keys):
 - Friendly alias: `monitor` → `enable_low_tps`
 
 Tab completion is available for subcommands, features, and on/off.
+
+Quick summary:
+- Reload: `/hmdqr tg reload`
+- List: `/hmdqr tg list`
+- Enable: `/hmdqr tg enable <feature|monitor>`
+- Disable: `/hmdqr tg disable <feature|monitor>`
+- Toggle: `/hmdqr tg toggle <feature> <on|off>`
 
 ## Permissions
 
