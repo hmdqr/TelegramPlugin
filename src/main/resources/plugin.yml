@@ -4,3 +4,34 @@ version: ${project.version}
 api-version: "1.20"
 author: hmdqr
 description: A customizable Telegram integration plugin for Paper/Spigot
+
+commands:
+	hmdqr:
+		description: HMDQR root command
+	usage: "/hmdqr telegram <reload|list|toggle|enable|disable>"
+		aliases: [hmdqrtelegram, hmdqr-tg, hmdqrtg]
+	permission: hmdqr.admin
+		permission-message: You don't have permission to use this command.
+
+permissions:
+	hmdqr.admin:
+		description: Allows using /hmdqr root command and all subcommands
+		default: op
+		children:
+			hmdqr.telegram: true
+	hmdqr.telegram:
+		description: Base permission for HMDQR Telegram commands
+		default: op
+		children:
+			hmdqr.telegram.reload: true
+			hmdqr.telegram.toggle: true
+			hmdqr.telegram.list: true
+	hmdqr.telegram.reload:
+		description: Allows reloading the TelegramPlugin configuration
+		default: op
+	hmdqr.telegram.toggle:
+		description: Allows toggling TelegramPlugin features on/off
+		default: op
+	hmdqr.telegram.list:
+		description: Allows listing current TelegramPlugin feature states
+		default: op

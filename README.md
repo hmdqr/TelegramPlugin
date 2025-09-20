@@ -8,7 +8,7 @@
 
 *Note: This project was fully coded using GitHub Copilot.*
 
-Lightweight, friendly Paper plugin that sends Minecraft server notifications to Telegram — join/leave, optional alerts, and a low TPS monitor. Clear setup, sane defaults, and no fuss.
+Lightweight, friendly Paper plugin that sends Minecraft server notifications to Telegram — join/leave, optional alerts, and a low TPS monitor. Clear setup, sane defaults, admin commands with tab completion, and no fuss.
 
 Quick links: [Releases](https://github.com/hmdqr/TelegramPlugin/releases) · [Actions/Artifacts](https://github.com/hmdqr/TelegramPlugin/actions) · [Issues](https://github.com/hmdqr/TelegramPlugin/issues)
 
@@ -25,8 +25,9 @@ Quick links: [Releases](https://github.com/hmdqr/TelegramPlugin/releases) · [Ac
 - Asynchronous HTTP (non-blocking) with URL-encoding and timeouts
 - Config validated at startup; disables plugin if token/chat ID are missing
 - Fully customizable messages with placeholders and parse modes (none/Markdown/MarkdownV2/HTML)
-
-No commands or permissions are added by this plugin.
+- Admin commands under a root namespace: `/hmdqr telegram …` (alias `tg`) with tab completion
+- Live toggles for features (enable/disable without restart)
+- Reload command also posts a Telegram confirmation including who reloaded
 
 ## Requirements
 - Java 17+
@@ -48,6 +49,8 @@ Then:
 2) Start once to generate `plugins/TelegramPlugin/config.yml`.
 3) Set `telegram.token` and `telegram.chat_id`.
 4) Restart.
+
+Tip: After editing config, you can use `/hmdqr telegram reload` instead of a full restart.
 
 ## Configuration
 The configuration file is written to `plugins/TelegramPlugin/config.yml` on first run.
@@ -106,6 +109,37 @@ messages:
 - messages.low_tps_threshold (double): alert when 1m TPS below this.
 - messages.low_tps_cooldown_seconds (int): minimum seconds between alerts.
 - config_version: used internally to merge new defaults on upgrade.
+
+## Commands
+
+Root prefix to namespace your plugins: `/hmdqr`
+
+- `/hmdqr telegram reload`
+  - Reloads config and runtime safely. Sends a Telegram message like: "✅ TelegramPlugin configuration reloaded by <name>."
+- `/hmdqr telegram list`
+  - Lists current feature toggles.
+- `/hmdqr telegram toggle <feature> <on|off>`
+  - Toggles a feature and saves config.
+- `/hmdqr telegram enable <feature>` and `/hmdqr telegram disable <feature>`
+  - Convenience verbs for toggling.
+
+Short alias for the namespace: replace `telegram` with `tg`, e.g. `/hmdqr tg reload`.
+
+Features (feature keys):
+- `enable_join`, `enable_quit`, `enable_kick`, `enable_ban`, `enable_death`, `enable_teleport`, `enable_low_tps`
+- Friendly alias: `monitor` → `enable_low_tps`
+
+Tab completion is available for subcommands, features, and on/off.
+
+## Permissions
+
+- `hmdqr.admin` (default: op)
+  - Allows using `/hmdqr` and includes all Telegram command permissions.
+- `hmdqr.telegram` (default: op)
+  - Base node; includes:
+    - `hmdqr.telegram.reload`
+    - `hmdqr.telegram.toggle`
+    - `hmdqr.telegram.list`
 
 ### Placeholders
 - Common: {player}, {uuid}, {world}, {online}, {max}

@@ -5,6 +5,7 @@ import com.hmdqr.telegramplugin.TelegramManager;
 import com.hmdqr.telegramplugin.util.MessageFormatter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,7 @@ public class TPSMonitor implements Runnable {
     private final Plugin plugin;
     private final TelegramManager telegram;
     private long lastAlertNanos = 0L;
+    private BukkitTask task;
 
     public TPSMonitor(Plugin plugin, TelegramManager telegram) {
         this.plugin = plugin;
@@ -20,10 +22,20 @@ public class TPSMonitor implements Runnable {
     }
 
     public void start() {
+        stop(); // ensure not double-started
         Main cfg = Main.getInstance();
         int checkSeconds = cfg.getConfig().getInt("messages.low_tps_check_seconds", 15);
         long periodTicks = Math.max(1, checkSeconds) * 20L;
-        Bukkit.getScheduler().runTaskTimer(plugin, this, periodTicks, periodTicks);
+        this.task = Bukkit.getScheduler().runTaskTimer(plugin, this, periodTicks, periodTicks);
+    }
+
+    public void stop() {
+        if (this.task != null) {
+            try {
+                this.task.cancel();
+            } catch (Exception ignored) {}
+            this.task = null;
+        }
     }
 
     @Override
