@@ -63,7 +63,7 @@ require_cmd git
 HAS_GH=0
 if command -v gh >/dev/null 2>&1; then HAS_GH=1; fi
 
-CURRENT_VERSION=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.version || true)
+CURRENT_VERSION=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.version 2>/dev/null | sed -n '/^[0-9]/p' | head -n 1 | tr -d '\r' | xargs || true)
 CURRENT_VERSION=${CURRENT_VERSION:-unknown}
 SUGGESTED_NEXT=$(suggest_next_version "$CURRENT_VERSION")
 BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")

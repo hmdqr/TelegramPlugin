@@ -9,7 +9,7 @@ for cmd in mvn git; do
   fi
 done
 
-VERSION=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.version)
+VERSION=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.version | sed -n '/^[0-9]/p' | head -n 1 | tr -d '\r' | xargs)
 if [[ -z "$VERSION" ]]; then
   echo "[ERROR] Unable to read project version" >&2
   exit 1
