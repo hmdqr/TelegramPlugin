@@ -6,7 +6,7 @@ cd /d "%SCRIPT_DIR%.."
 
 where mvn >nul 2>nul
 if errorlevel 1 (
-  echo [ERROR] Maven (mvn) not found in PATH.
+  echo [ERROR] Maven ^(mvn^) not found in PATH.
   echo.
   pause
   exit /b 1
