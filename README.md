@@ -223,17 +223,13 @@ Notes
 - CI builds use Temurin JDK 21, but the plugin targets Java 17 bytecode (maven-compiler release=17). Running on Java 17+ is supported.
 
 ## Helper scripts
-Linux/macOS
-- `bash scripts/bump_version.sh 1.1.0`
-- `bash scripts/build.sh`
-- `bash scripts/tag_and_push.sh`
-- `bash scripts/release.sh`
-
 Windows
-- `scripts\bump_version.bat 1.1.0`
-- `scripts\build.bat`
-- `scripts\tag_and_push.bat`
-- `scripts\release.bat`
+- `scripts\build.bat` — Build the shaded JAR locally (skip tests)
+- `scripts\release_simple.bat` — Build and upload the shaded JAR directly to a GitHub Release named `v<version>`
+- `python scripts\release_wizard.py` — Interactive wizard: optional version bump → commit/push → tag/push → optional build + upload to Release
+
+CI (GitHub Actions)
+- Pushing a tag matching `v*` builds and uploads the JAR automatically (see `.github/workflows/release.yml`).
 ## Known limitations
 - Single target chat_id (per plugin instance)
 - No proxy configuration
